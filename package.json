@@ -7,10 +7,16 @@
   "private"      : true,
   "dependencies" : {
     "express"    : "~4.7.2",
+    "ejs"        : "latest",
     "mongoose"   : "~3.6.2",
     "morgan"     : "~1.2.2",
     "body-parser": "~1.5.2",
     "method-override": "~2.1.2",
-    "bower"      : "latest"
+    "bower"      : "latest",
+    "passport-google-oauth" : "latest",
+    "passport"   : "latest",
+    "bcrypt-nodejs" : "latest",
+    "connect-flash" : "latest",
+    "underscore" : "latest"
     }
 }
