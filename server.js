@@ -8,7 +8,10 @@ var bodyParser = require('body-parser');    // pull information from HTML POST (
 var methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
 
 // own models
-var user = require('./user')
+var user = require('./models/user');
+var Todo = require('./models/todo');
+var board = require('./models/board');
+var kTicket = require('./models/ticket');
 
 // configuration =================
 mongoose.connect('mongodb://localhost/kanban-simple');  
@@ -21,12 +24,27 @@ app.use(bodyParser.json());                                     // parse applica
 app.use(bodyParser.json({ type: 'application/vnd.api+json' })); // parse application/vnd.api+json as json
 app.use(methodOverride());
 
-// define model =================
-var Todo = mongoose.model('Todo', {
-           text : String
-           });
+board.create({  board            : {
+        name         : "testbrett",
+        metadata     : "blubb",
+    },
+    column           : {
+        colName      : "testcol",
+        tickets      : "tix", // eventually should become a list of tickets
+    }
+},function(err,blubb){});
 
 user.create({ twitter : {id :  '1234'}},function(err,blubb){});
+kTicket.create(  { name        : "hello",
+ id          : 1,
+ priority    : 2,
+ color       : "blue", // html style color
+ colId       : 3,
+ assinged    : "Its a me, Mario", // eventually this shall be users
+ text        : "Everything dies",
+ tags        : "#board",
+ header      : "awesome tix"
+}, function(err,blubb){});
 
 
 // routes =======================
