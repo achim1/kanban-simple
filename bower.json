@@ -9,6 +9,7 @@
     "angular-route": "latest",
     "bootstrap": "latest",
     "angular-bootstrap": "latest",
+    "ui-bootstrap": "latest",
     "angular-ui-router": "latest",
     "angular-ui-select": "latest",
     "angular-sanitize": "latest"

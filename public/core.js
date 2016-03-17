@@ -1,17 +1,34 @@
 
-var scotchTodo = angular.module('scotchTodo', []);
+var app = angular.module('app', ['ngRoute','ngAnimate','ui.bootstrap']);
 //var app = angular.module('controllers.header', ['ngRoute', 'ui.bootstrap']);
 
 //app.controller("HeaderCtrl", function($scope, $location) {
-function HeaderCtrl($scope, $http) {
-    $scope.isActive = function (viewLocation) {
-        var active = (viewLocation === $location.path());
-        return active;
+app.controller('HeaderCtrl', function($scope, $http) {
+    //$scope.isActive = function (viewLocation) {
+    //    var active = (viewLocation === $location.path());
+    //    return active;
+    //};
+    $scope.deleteAllBoards = function(){
+        $http.delete('api/boards/delete')
+            .success(function(data) {
+                console.log(data);
+            })
+            .error(function(data){
+                console.log(data)
+            });
+    };
+    $scope.createBoard = function(){
+        $http.post('api/boards/')
+            .success(function(data) {
+                console.log(data);
+            })
+            .error(function(data){
+                console.log(data)
+            });
     };
 
-};
-
-function mainController($scope, $http) {
+});
+app.controller('mainController',function($scope, $http) {
     $scope.formData = {};
 
     // when landing on the page, get all todos and show them
@@ -36,7 +53,6 @@ function mainController($scope, $http) {
                 console.log('Error: ' + data);
             });
     };
-
     // delete a todo after checking it
     $scope.deleteTodo = function(id) {
         $http.delete('api/todos/' + id)
@@ -49,4 +65,29 @@ function mainController($scope, $http) {
             });
     };
 
-}
+});
+app.controller('DropdownCtrl', function ($scope, $log) {
+  $scope.items = [
+    'The first choice!',
+    'And another choice for you.',
+    'but wait! A third!'
+  ];
+
+  $scope.status = {
+    isopen: false
+  };
+
+  $scope.toggled = function(open) {
+    $log.log('Dropdown is now: ', open);
+  };
+
+  $scope.toggleDropdown = function($event) {
+    $event.preventDefault();
+    $event.stopPropagation();
+    $scope.status.isopen = !$scope.status.isopen;
+  };
+
+  $scope.appendToEl = angular.element(document.querySelector('#dropdown-long-content'));
+});
+
+

@@ -1,7 +1,7 @@
 <!-- index.html -->
 <!doctype html>
 <!-- ASSIGN OUR ANGULAR MODULE -->
-<html ng-app="scotchTodo">
+<html ng-app="app">
 <head>
     <base href="http://85.214.73.30/kanban-simple/"> 
     <!-- META -->
@@ -21,8 +21,11 @@
 
     <!-- SPELLS -->
     <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.2.4/ui-bootstrap-tpls.js"></script> -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><!-- load jquery -->
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script><!-- load angular -->
+    <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><!-- load jquery -->-->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script><!-- load angular -->
+     <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.0/angular-route.min.js"></script>
+     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-animate.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.2.4/ui-bootstrap-tpls.js"></script>
     <script src="core.js"></script>
 
 </head>
@@ -30,7 +33,7 @@
 <body>
  <header style="{top:0px;top-margin:-10px}">
 <div ng-controller="HeaderCtrl" class="navbar navbar-default navbar-static-top" role="navigation">
-    <div class="container-fluid">
+    <div class="container-fluid" ng-controller='DropdownCtrl'>
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed">
                 <span class="sr-only">Toggle navigation</span>
@@ -38,10 +41,20 @@
             </button>
             <a class="navbar-brand" href="#/home">Kanban Simple</a>
         </div>
+         <ul uib-dropdown class='nav navbar-nav'>
+           <a href uib-dropdown-toggle class='navbar-brand'>Test things<b class="caret"></b></a>
+              <ul uib-dropdown-menu role="menu" class='nav navbar-nav' aria-labelledby="simple-dropdown">
+                <li role='menuitem' ng-click="deleteAllBoards()"><a href="#">Delete All kanban boards</a></li>
+            <li role='menuitem' ng-click="createBoard()"><a href="#">Create random board</a></li>
+              <li class="divider"></li>
+              <li class="divider"></li>
+              <li role="menuitem"><a href="#">Separated link</a></li>
+          </ul>
+          </ul>
         <div class="navbar-collapse collapse" collapse="navCollapsed" ng-click="navCollapsed=true">
             <ul class="nav navbar-nav navbar-right">
-                <li ng-class="{ active: isActive('/home') }"><a href="#/home">Home</a></li>
-                <li ng-class="{ active: isActive('/about') }"><a href="#/about">About</a></li>
+                <li ><a href="#/home">Home</a></li>
+                <li ><a href="#/about">About</a></li>
             </ul>
         </div>
     </div>

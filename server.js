@@ -10,9 +10,11 @@ var methodOverride = require('method-override'); // simulate DELETE and PUT (exp
 // own models
 var User = require('./models/user');
 var Todo = require('./models/todo');
-var kBoard = require('./models/board');
-var kTicket = require('./models/ticket');
-var kColumn = require('./models/column');
+var kanban = require('./models/kModels');
+var wiring = require('./boardWiring');
+//var kBoard = require('./models/board');
+//var kTicket = require('./models/ticket');
+//var kColumn = require('./models/column');
 // configuration =================
 mongoose.connect('mongodb://localhost/kanban-simple');  
 
@@ -46,7 +48,7 @@ thisuser.save(modelCallback)//,function(err,blubb){});
 
 
 // create a board
-var board = new kBoard({ 
+var board = new kanban.kBoard({ 
         user         : thisuser._id,
         board        : {
         name         : "testbrett",
@@ -54,7 +56,8 @@ var board = new kBoard({
     },
 })
 board.save(modelCallback);
-var firstColumn = new kColumn({
+
+var firstColumn = new kanban.kColumn({
     board   : board._id,
     column : {
     name        : 'first',
@@ -64,7 +67,8 @@ var firstColumn = new kColumn({
     header      : 'most important stuff',
 }});
 firstColumn.save(modelCallback);
-var secondColumn = new kColumn({
+
+var secondColumn = new kanban.kColumn({
     board   : board._id,
     column : {
     name        : 'second',
@@ -74,7 +78,8 @@ var secondColumn = new kColumn({
     header      : 'not so important stuff',
 }});
 secondColumn.save(modelCallback);
-var ticket = new kTicket(  {
+
+var ticket = new kanban.kTicket(  {
  column : firstColumn._id,
  ticket:
  { name        : "Something to do",
@@ -97,18 +102,22 @@ app.get('/api/users', function(req, res) {
     User.find().populate('tickets').exec(function(err,users){
     res.json(users);
     })});
-app.get('/api/boards', function(req, res) {
-    kBoard.find().populate('user').exec(function(err,boards){
-    res.json(boards);
-    })});
+//app.get('/api/boards', function(req, res) {
+//    kanban.kBoard.find().populate('user').exec(function(err,boards){
+//    res.json(boards);
+//    })});
 app.get('/api/columns', function(req, res) {
-    kColumn.find().populate('board column.tickets').exec(function(err,cols){
+    kanban.kColumn.find().populate('board column.tickets').exec(function(err,cols){
     res.json(cols);
     })});
 app.get('/api/tickets', function(req, res) {
-    kTicket.find().populate("ticket.assigned").exec(function(err,tix){
+    kanban.kTicket.find().populate("ticket.assigned").exec(function(err,tix){
     res.json(tix)})    });
 
+// boards
+app.get('/api/boards/all', wiring.getAllBoards);
+app.delete('/api/boards/delete/', wiring.deleteAllBoards);
+app.post('/api/boards/', wiring.createBoard);
 
 
 // get all todos
@@ -122,23 +131,6 @@ app.get('/api/todos', function(req, res) {
     });
 });
 
-// create todo and send back all todos after creation
-app.post('/api/todos', function(req, res) {
-// create a todo, information comes from AJAX request from Angular
-    Todo.create({
-      text : req.body.text,
-      done : false
- }, function(err, todo) {
-    if (err)
-      res.send(err);
-// get and return all the todos after you create another
-    Todo.find(function(err, todos) {
-    if (err)
-      res.send(err)
-    res.json(todos);
-  });
-  });
-});
 // delete a todo
 app.delete('/api/todos/:todo_id', function(req, res) {
 Todo.remove({
