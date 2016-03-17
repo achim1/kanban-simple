@@ -17,6 +17,7 @@
     "passport"   : "latest",
     "bcrypt-nodejs" : "latest",
     "connect-flash" : "latest",
-    "underscore" : "latest"
+    "underscore" : "latest",
+    "mongoose-relationship" : "latest"
     }
 }

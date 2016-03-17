@@ -1,2 +1,7 @@
 # kanban-simple
-A simple kanban board with nodejs and couchdb
+A simple kanban board 
+
+* created with the mean stack
+
+## features
+* login with google

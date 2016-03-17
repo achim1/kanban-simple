@@ -1,10 +1,14 @@
 var mongoose = require('mongoose');
 var bcrypt   = require('bcrypt-nodejs');
+//var relationship = require("mongoose-relationship");
 
 // define the schema for our user model
 var userSchema = mongoose.Schema({
-
+    //parent: { type:mongoose.Schema.ObjectId, ref:"kTicket", childPath:"user" },
+    tickets          : [{ type: mongoose.Schema.ObjectId, ref: 'kTicket'}],
+    boards           : [{ type: mongoose.Schema.ObjectId, ref: 'kanbanBoard'}],
     local            : {
+        id           : Number,
         email        : String,
         password     : String,
     },
@@ -39,6 +43,7 @@ userSchema.methods.generateHash = function(password) {
 userSchema.methods.validPassword = function(password) {
     return bcrypt.compareSync(password, this.local.password);
 };
+//userSchema.plugin(relationship, { relationshipPathName:'parent' });
 
 // create the model for users and expose it to our app
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('User', userSchema,"User");

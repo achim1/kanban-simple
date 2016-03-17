@@ -1,15 +1,23 @@
 var mongoose = require('mongoose');
+var user = require("./user");
+//var relationship = require("mongoose-relationship");
 
-var kTicket = mongoose.model("kTicket",{
+var kTicketSchema = mongoose.Schema({
+    //parent: { type:mongoose.Schema.ObjectId, ref:"kColumn", childPath:"tickets" },
+    column :  { type: mongoose.Schema.ObjectId, ref : "kColumn"},
+    ticket : {
     name        : String,
     id          : Number,
     priority    : Number,
     color       : String, // html style color
     colId       : String,
-    assinged    : String, // eventually this shall be users
+    assigned    : [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}], 
     text        : String,
     tags        : String,
     header      : String
+    }
 });
 
-module.exports = kTicket;
+
+//kTicketSchema.plugin(relationship, { relationshipPathName:'parent' });
+module.exports = mongoose.model('kTicket',kTicketSchema,'kTicket');
