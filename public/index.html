@@ -3,20 +3,24 @@
 <!-- ASSIGN OUR ANGULAR MODULE -->
 <html ng-app="app">
 <head>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/angular_material/1.0.5/angular-material.min.css">
+    <!--<link rel="stylesheet" href="../bower_components/angular-material/angular-material.css">-->
+
     <base href="http://85.214.73.30/kanban-simple/"> 
     <!-- META -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport --> -->
 
-    <title>Node/Angular Todo App</title>;
+    <title>A simple kanban board</title>;
 
     <!-- SCROLLS -->
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"><!-- load bootstrap -->
+<!--    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"><!-- load bootstrap -->
     <style>
         html                    { overflow-y:scroll; }
         body                    { padding-top:0px; margin-top:-1.5em;top:0px}
         #todo-list              { margin-bottom:30px; }
-    </style>
+    </style> -->
 
 
     <!-- SPELLS -->
@@ -25,14 +29,31 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script><!-- load angular -->
      <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.0/angular-route.min.js"></script>
      <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-animate.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.2.4/ui-bootstrap-tpls.js"></script>
+     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-aria.min.js"></script>
+    <!--<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.2.4/ui-bootstrap-tpls.js"></script> -->
+    <!-- <script src="../bower_components/angular-material/angular-material.js"></script>-->
+    <script src="//ajax.googleapis.com/ajax/libs/angular_material/1.0.5/angular-material.min.js"></script>
     <script src="core.js"></script>
 
 </head>
-<!-- SET THE CONTROLLER AND GET ALL TODOS -->
 <body>
- <header style="{top:0px;top-margin:-10px}">
-<div ng-controller="HeaderCtrl" class="navbar navbar-default navbar-static-top" role="navigation">
+ <header> <!-- style="{top:0px;top-margin:-10px}"> -->
+<div layout="column" layout-fill>
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <span>Kanban Simple</span>
+      <!-- fill up the space between left and right area -->
+      <span flex></span>
+      <md-button>
+        Right Bar Button
+      </md-button>
+    </div>
+  </md-toolbar>
+  <md-content>
+    Hello!
+  </md-content>
+</div>
+<!-- <div ng-controller="HeaderCtrl" class="navbar navbar-default navbar-static-top" role="navigation">
     <div class="container-fluid" ng-controller='DropdownCtrl'>
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed">
@@ -58,49 +79,9 @@
             </ul>
         </div>
     </div>
-</div> 
+</div> -->
 
     </header>
-
-
-    <div class="container" ng-controller="mainController">
-
-        <!-- HEADER AND TODO COUNT -->
-        <div class="jumbotron text-center">
-                <h2>Things to do: <span class="label label-info">{{ todos.length }}</span></h2>
-        </div>
-
-        <!-- TODO LIST -->
-        <div id="todo-list" class="row">
-            <div class="col-sm-4 col-sm-offset-4">
-
-                <!-- LOOP OVER THE TODOS IN $scope.todos -->
-                <div class="checkbox" ng-repeat="todo in todos">
-                    <label>
-                        <input type="checkbox" ng-click="deleteTodo(todo._id)"> {{ todo.text }}
-                    </label>
-                </div>
-
-            </div>
-        </div>
-
-        <!-- FORM TO CREATE TODOS -->
-        <div id="todo-form" class="row">
-            <div class="col-sm-8 col-sm-offset-2 text-center">
-                <form>
-                    <div class="form-group">
-
-                        <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
-                        <input type="text" class="form-control input-lg text-center" placeholder="I want to buy a puppy that will love me forever" ng-model="formData.text">
-                    </div>
-
-                    <!-- createToDo() WILL CREATE NEW TODOS -->
-                    <button type="submit" class="btn btn-primary btn-lg" ng-click="createTodo()">Add</button>;
-                </form>
-            </div>
-        </div>
-
-    </div>
 
 </body>
 </html>
